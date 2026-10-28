@@ -29,8 +29,8 @@ def test_ft_exercise(exercise_file_name):
     try:
         # Import your exercise file
         # This is like doing: import ft_plot_area
-        import sys
-        sys.path.append(".")
+        import sys, glob
+        sys.path.extend(glob.glob("**/ex*", recursive=True) + glob.glob("ex*") + ["."])
         ft_module = __import__(exercise_file_name)
 
         # Get the function from your file
