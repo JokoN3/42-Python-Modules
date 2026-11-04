@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+summary.md
+python01/check.txt
+main.py
