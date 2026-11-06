@@ -42,6 +42,10 @@ class Plant:
     def get_height(self) -> float:
         return self._height
 
+    @staticmethod
+    def is_older_than_year(age: int) -> bool:
+        return age > 365
+
 class Flower(Plant):
     def __init__(self, name: str, height: float, age: int, color: str) -> None:
         super().__init__(name, height, age)
