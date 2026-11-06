@@ -14,10 +14,10 @@ class Plant:
         def show_called(self) -> None:
             self._show_calls += 1
 
-        def display_stats(self) -> None:
-            print(f"Stats: {self._grow_calls} grow, {self._age_calls} age, "
+        def display(self) -> None:
+            print(f"Stats: {self._grow_calls} grow, "
+                  f"{self._age_calls} age, "
                   f"{self._show_calls} show")
-
 
     def __init__(self, name: str, height: float, age: int) -> None:
         self._name = name
@@ -33,7 +33,6 @@ class Plant:
             self._age = 0
         else:
             self._age = age
-
 
     def show(self) -> None:
         print(f"{self._name}: {self._height:.1f}cm, {self._age} days old")
@@ -74,7 +73,6 @@ class Plant:
     @classmethod
     def make_anonymous(cls) -> "Plant":
         return cls("Unknown plant", 0.0, 0)
-    
 
 
 class Flower(Plant):
@@ -94,9 +92,10 @@ class Flower(Plant):
     def bloom(self) -> None:
         self.has_bloomed = True
 
+
 class Seed(Flower):
-    def __init__(self, name:str, height: float,
-                age: int, color: str, seeds: int) -> None:
+    def __init__(self, name: str, height: float,
+                 age: int, color: str, seeds: int) -> None:
         super().__init__(name, height, age, color)
         self.seeds = 0
         self.seeds_after_bloom = seeds
@@ -111,7 +110,7 @@ class Seed(Flower):
 
 
 class Vegetable(Plant):
-    def __init__(self, name: str, height: float, 
+    def __init__(self, name: str, height: float,
                  age: int, harvest_season: str) -> None:
         super().__init__(name, height, age)
         self.harvest_season = harvest_season
@@ -138,23 +137,30 @@ class Tree(Plant):
         def shade_called(self) -> None:
             self._shade_calls += 1
 
-        def display_stats(self) -> None:
-            super().display_stats()
+        def display(self) -> None:
+            super().display()
             print(f"{self._shade_calls} shade")
 
     def __init__(self, name: str, height: float, age: int,
-                 trunk_diameter: float):
+                 trunk_diameter: float) -> None:
         super().__init__(name, height, age)
         self.trunk_dia = trunk_diameter
+        self.stats: Tree.Statistics = self.Statistics()
 
     def show(self) -> None:
         super().show()
         print(f"Trunk diameter: {self.trunk_dia}cm")
 
     def produce_shade(self) -> None:
-        print(f"Tree {self._name} now produces a shade of {self._height}", end="")
+        print(f"Tree {self._name} now produces a shade of "
+              f"{self._height}", end="")
         print(f"cm long and {self.trunk_dia}cm wide.")
         self.stats.shade_called()
+
+
+def display_stats(plant: Plant) -> None:
+    plant.stats.display()
+
 
 def main() -> None:
     print("=== Garden statistics ===")
@@ -168,22 +174,22 @@ def main() -> None:
     rose = Flower("Rose", 15.0, 10, "red")
     rose.show()
     print("[statistics for Rose]")
-    rose.stats.display_stats()
+    display_stats(rose)
     print("[asking the rose to grow and bloom]")
     rose.grow(8.0)
     rose.bloom()
     rose.show()
-    rose.stats.display_stats()
+    display_stats(rose)
 
     print("\n=== Tree")
     oak = Tree("Oak", 200.0, 365, 5.0)
     oak.show()
     print("[statistics for Oak]")
-    oak.stats.display_stats()
+    display_stats(oak)
     print("[asking the oak to produce shade]")
     oak.produce_shade()
     print("[statistics for Oak]")
-    oak.stats.display_stats()
+    display_stats(oak)
 
     print("\n=== Seed")
     sunflower = Seed("Sunflower", 80.0, 45, "yellow", 42)
@@ -194,12 +200,14 @@ def main() -> None:
     sunflower.bloom()
     sunflower.show()
     print("[statistics for Sunflower]")
-    sunflower.stats.display_stats()
+    display_stats(sunflower)
+
     print("\n=== Anonymous")
     unknown = Plant.make_anonymous()
     unknown.show()
     print("[statistics for Unknown plant]")
-    unknown.stats.display_stats()
+    display_stats(unknown)
+
 
 if __name__ == "__main__":
     main()
