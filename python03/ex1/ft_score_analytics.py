@@ -16,7 +16,7 @@ def main() -> None:
     print("=== Player Score Analytics ===")
     processed_args: list[int] = process_args(sys.argv[1:])
 
-    if len(processed_args) < 1:
+    if not processed_args:
         print("No scores provided. Usage: python3 "
               "ft_score_analytics.py <score1> <score2> ...")
         return
