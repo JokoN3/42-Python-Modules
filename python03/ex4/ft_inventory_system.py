@@ -30,9 +30,8 @@ def main() -> None:
 
     total_quantity: int = sum(inventory.values())
     print(f"Total quantity of the {len(inventory)} items: {total_quantity}")
-    
+
     items_list = list(inventory.keys())
-    first_run: bool = True
     if inventory:
         for item in inventory.keys():
             qty: int = inventory[item]
@@ -48,11 +47,11 @@ def main() -> None:
                 most_abundant = item
             if qty < inventory[least_abundant]:
                 least_abundant = item
-    
+
         print(f"Item most abundant: {most_abundant} with "
-                f"quantity {inventory[most_abundant]}")
+              f"quantity {inventory[most_abundant]}")
         print(f"Item least abundant: {least_abundant} "
-                f"with quantity {inventory[least_abundant]}")
+              f"with quantity {inventory[least_abundant]}")
 
     inventory.update({"magic_item": 1})
     print(f"Updated inventory: {inventory}")
